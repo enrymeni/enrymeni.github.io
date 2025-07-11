@@ -2,24 +2,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Iframe Page</title>
+  <title>iFrame Dynamic Loader</title>
 </head>
 <body>
-  <h1>Inside the Iframe</h1>
-  <div id="data"></div>
+  <h2>Dynamic iFrame Loader</h2>
+  <iframe id="myFrame" width="800" height="600"></iframe>
 
   <script>
-    async function fetchData() {
-      try {
-        const response = await fetch('https://apim.workato.com/enricom0/embedded-v1/function-call-will-create-list?api_token=7e10da2682db74dddc4d70305d3f382c9351c73761574aa033b186c6532f8149');
-        const data = await response.json();
-        document.getElementById('token').innerText = JSON.stringify(data, null, 2);
-      } catch (error) {
-        console.error('API call failed:', error);
-      }
-    }
+    // Step 1: Call the API
+    fetch('https://apim.workato.com/enricom0/embedded-v1/function-call-will-create-list?api_token=7e10da2682db74dddc4d70305d3f382c9351c73761574aa033b186c6532f8149') // replace with your actual API endpoint
+      .then(response => response.json())
+      .then(data => {
+        // Step 2: Extract necessary info from API response
+        const token = data.token;
 
-    fetchData();
+        // Step 3: Build the new URL
+        const newUrl = `https://app.workato.com/direct_link/embedded/connections/17715839?workato_dl_token=${token}`;
+
+        // Step 4: Update the iframe src
+        document.getElementById('myFrame').src = newUrl;
+      })
+      .catch(error => {
+        console.error('Error fetching API:', error);
+      });
   </script>
 </body>
 </html>
