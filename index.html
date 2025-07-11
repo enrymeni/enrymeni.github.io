@@ -16,7 +16,6 @@
       height: 100vh;
     }
 
-    /* Sidebar menu */
     .sidebar {
       width: 200px;
       background-color: #007BFF;
@@ -48,7 +47,6 @@
       background-color: #0056b3;
     }
 
-    /* Main content */
     .main {
       flex-grow: 1;
       padding: 20px;
@@ -57,7 +55,6 @@
 
     iframe {
       width: 100%;
-      height: 600px;
       border: 1px solid #ccc;
       display: none;
       margin-top: 20px;
@@ -90,7 +87,7 @@
     function showProjects() {
       document.getElementById("pageContent").style.display = "none";
       const iframe = document.getElementById("projectFrame");
-      iframe.src = "iframe-content.html"; // Example iframe-allowed page
+      iframe.src = "iframe-content.html";
       iframe.style.display = "block";
     }
 
@@ -112,6 +109,15 @@
           break;
       }
     }
+
+    // Listen for height messages from the iframe
+    window.addEventListener("message", function(event) {
+      if (event.origin !== window.location.origin) return; // Optional security check
+      if (event.data && event.data.type === "setHeight") {
+        const iframe = document.getElementById("projectFrame");
+        iframe.style.height = event.data.height + "px";
+      }
+    });
   </script>
 
 </body>
