@@ -1,0 +1,25 @@
+<!-- iframe-content.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Iframe Page</title>
+</head>
+<body>
+  <h1>Inside the Iframe</h1>
+  <div id="data"></div>
+
+  <script>
+    async function fetchData() {
+      try {
+        const response = await fetch('https://apim.workato.com/enricom0/embedded-v1/function-call-will-create-list?api_token=7e10da2682db74dddc4d70305d3f382c9351c73761574aa033b186c6532f8149');
+        const data = await response.json();
+        document.getElementById('token').innerText = JSON.stringify(data, null, 2);
+      } catch (error) {
+        console.error('API call failed:', error);
+      }
+    }
+
+    fetchData();
+  </script>
+</body>
+</html>
