@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My First Web Page</title>
+  <title>My Web Page with Menu</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -16,7 +16,7 @@
     }
 
     nav ul {
-      list-style-type: none;
+      list-style: none;
       margin: 0;
       padding: 0;
       display: flex;
@@ -30,6 +30,7 @@
       color: white;
       text-decoration: none;
       font-weight: bold;
+      cursor: pointer;
     }
 
     nav ul li a:hover {
@@ -39,6 +40,14 @@
     .content {
       padding: 20px;
     }
+
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: 1px solid #ccc;
+      display: none; /* initially hidden */
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -46,18 +55,50 @@
   <!-- Navigation Menu -->
   <nav>
     <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Projects</a></li>
-      <li><a href="#">Contact</a></li>
+      <li><a onclick="showContent('home')">Home</a></li>
+      <li><a onclick="showContent('about')">About</a></li>
+      <li><a onclick="showProjects()">Projects</a></li>
+      <li><a onclick="showContent('contact')">Contact</a></li>
     </ul>
   </nav>
 
   <!-- Page Content -->
-  <div class="content">
+  <div class="content" id="pageContent">
     <h1>Welcome to My Website!</h1>
     <p>This is your homepage. You can start adding your content here.</p>
   </div>
+
+  <!-- iFrame for Projects -->
+  <iframe id="projectFrame"></iframe>
+
+  <script>
+    function showProjects() {
+      document.getElementById("pageContent").style.display = "none";
+      const iframe = document.getElementById("projectFrame");
+      iframe.src = "https://docs.workato.com/en/";
+      iframe.style.display = "block";
+    }
+
+    function showContent(section) {
+      const content = document.getElementById("pageContent");
+      const iframe = document.getElementById("projectFrame");
+      iframe.style.display = "none";
+      content.style.display = "block";
+
+      // Update content if you want (simple switch)
+      switch(section) {
+        case 'home':
+          content.innerHTML = "<h1>Welcome to My Website!</h1><p>This is your homepage.</p>";
+          break;
+        case 'about':
+          content.innerHTML = "<h1>About Me</h1><p>Some info about who I am.</p>";
+          break;
+        case 'contact':
+          content.innerHTML = "<h1>Contact</h1><p>You can reach me at email@example.com.</p>";
+          break;
+      }
+    }
+  </script>
 
 </body>
 </html>
