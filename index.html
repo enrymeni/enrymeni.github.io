@@ -92,23 +92,23 @@
   const iframe = document.getElementById("projectFrame");
   iframe.style.display = "none"; // Hide while loading
 
-  // Call your API to get the URL
-  fetch('https://apim.workato.com/enricom0/embedded-v1/function-call-will-create-list?api_token=7e10da2682db74dddc4d70305d3f382c9351c73761574aa033b186c6532f8149') // replace with your actual API endpoint
-      .then(response => response.json())
-      .then(data => {
-        const token = data.token;
-
-        // Step 2: Build the new URL
-        const newUrl = 'https://app.workato.com/direct_link/embedded/connections/17715839?workato_dl_token=${token}';
-
-        // Step 3: Update the iframe src
-        const frame = document.getElementById('myFrame');
-        frame.src = newUrl;
-      })
-      .catch(error => {
-        console.error('Error fetching API:', error);
-      });
+  fetch('https://apim.workato.com/enricom0/embedded-v1/function-call-will-create-list?api_token=7e10da2682db74dddc4d70305d3f382c9351c73761574aa033b186c6532f8149')
+    .then(response => response.json())
+    .then(data => {
+      const token = data.token;
+      // Use backticks for template literal
+      const newUrl = `https://app.workato.com/direct_link/embedded/connections/17715839?workato_dl_token=${token}`;
+      // Use the correct iframe ID
+      iframe.src = newUrl;
+      iframe.style.display = "block"; // Show the iframe
+    })
+    .catch(error => {
+      console.error('Error fetching API:', error);
+      document.getElementById("pageContent").style.display = "block";
+      document.getElementById("pageContent").innerHTML = "<p>Error loading project: " + error.message + "</p>";
+    });
 }
+
 
     function showContent(section) {
       const content = document.getElementById("pageContent");
