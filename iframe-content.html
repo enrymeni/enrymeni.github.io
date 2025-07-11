@@ -6,7 +6,7 @@
 </head>
 <body>
   <h2>Dynamic iFrame Loader</h2>
-  <iframe id="myFrame" width="800" height="600"></iframe>
+  <iframe id="myFrame"></iframe>
 
   <script>
     // Step 1: Call the API
@@ -15,7 +15,6 @@
       .then(data => {
         // Step 2: Extract necessary info from API response
         const token = data.token;
-
         // Step 3: Build the new URL
         const newUrl = `https://app.workato.com/direct_link/embedded/connections/17715839?workato_dl_token=${token}`;
 
