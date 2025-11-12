@@ -72,7 +72,7 @@
       <li><a onclick="showContent('home')">Home</a></li>
       <li><a onclick="showContent('about')">About</a></li>
       <li><a onclick="showProjects()">Connections</a></li>
-      <li><a onclick="showContent('contact')">Contact</a></li>
+      <li><a onclick="showContent('contact')">Recipe</a></li>
     </ul>
   </div>
 
@@ -111,22 +111,25 @@
 
 
     function showContent(section) {
-      const content = document.getElementById("pageContent");
-      const iframe = document.getElementById("projectFrame");
-      iframe.style.display = "none";
-      content.style.display = "block";
+      document.getElementById("pageContent").style.display = "none";
+  const iframe = document.getElementById("projectFrame");
+  iframe.style.display = "none"; // Hide while loading
 
-      switch(section) {
-        case 'home':
-          content.innerHTML = "<h1>Welcome to My Website!</h1><p>This is your homepage.</p>";
-          break;
-        case 'about':
-          content.innerHTML = "<h1>About Me</h1><p>Some info about who I am.</p>";
-          break;
-        case 'contact':
-          content.innerHTML = "<h1>Contact</h1><p>You can reach me at email@example.com.</p>";
-          break;
-      }
+  fetch('https://apim.workato.com/enricom0/embedded-v1/function-call-will-create-list?api_token=7e10da2682db74dddc4d70305d3f382c9351c73761574aa033b186c6532f8149')
+    .then(response => response.json())
+    .then(data => {
+      const token = data.token;
+      // Use backticks for template literal
+      const newUrl = `https://app.workato.com/direct_link/embedded/recipes/67734694?workato_dl_token=${token}`;
+      // Use the correct iframe ID
+      iframe.src = newUrl;
+      iframe.style.display = "block"; // Show the iframe
+    })
+    .catch(error => {
+      console.error('Error fetching API:', error);
+      document.getElementById("pageContent").style.display = "block";
+      document.getElementById("pageContent").innerHTML = "<p>Error loading project: " + error.message + "</p>";
+    });
     }
   </script>
 
